@@ -9,7 +9,6 @@ import updateStatus from "../redux/todos/thunk/updateStatus";
 import updateTextThunk from "../redux/todos/thunk/updateTextThunk";
 import toast from "react-hot-toast";
 
-
 export default function Todo({ todo, completedTask }) {
   const dispatch = useDispatch();
   const { text, id, completed, color } = todo;
@@ -18,15 +17,13 @@ export default function Todo({ todo, completedTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [textInput, setTextInput] = useState(text);
 
-
   const handleStatusChange = (todoId) => {
     dispatch(updateStatus(todoId, completed));
     if (!completed) {
       toast("Good Job! You Have Completed The Task Succesfully", {
         icon: "👏",
       });
-    }
-    else {
+    } else {
       toast.error("Task Incomplete!");
     }
   };
@@ -38,13 +35,13 @@ export default function Todo({ todo, completedTask }) {
     if (completed) {
       toast.error("You Can't Change The Priority Of A Completed Task!");
     }
-    if(color === "red" && !completed) {
+    if (color === "red" && !completed) {
       toast.error("This Task Has The Highest Priority!");
     }
-    if(color === "yellow" && !completed) {
+    if (color === "yellow" && !completed) {
       toast.success("This Task Has Medium Priority!");
     }
-    if(color === "green" && !completed){
+    if (color === "green" && !completed) {
       toast.success("This Task Has The Lowest Priority!");
     }
   };
@@ -100,6 +97,7 @@ export default function Todo({ todo, completedTask }) {
       {isEditing ? (
         <label className="select-none flex-1">
           <input
+            onBlur={() => isEditing && setIsEditing(false)}
             onChange={(e) => setTextInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
