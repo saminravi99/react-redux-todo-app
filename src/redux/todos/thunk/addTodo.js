@@ -2,7 +2,7 @@ import { added } from "../actions";
 
 const addTodo = (todoText) => {
     return async (dispatch) => {
-        const response = await fetch("http://localhost:9000/todos", {
+        const response = await fetch("https://react-redux-todo-server.herokuapp.com/todos", {
             method: "POST",
             body: JSON.stringify({
                 text: todoText,
@@ -14,7 +14,8 @@ const addTodo = (todoText) => {
         });
         const todo = await response.json();
 
-        dispatch(added(todo.text));
+        await dispatch(added(todo.text));
+        
     };
 };
 
