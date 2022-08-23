@@ -5,16 +5,22 @@ import FooterIncompleteTask from "./FooterIncompleteTask";
 import Todo from "./Todo";
 
 export default function TodoList() {
+  // redux hook to get the todos
   const todos = useSelector((state) => state.todos);
+  // redux hook to get the filters
   const filters = useSelector((state) => state.filters);
+  // redux hook to dispatch actions
   const dispatch = useDispatch();
 
+  // to get all todos from server
   useEffect(() => {
     dispatch(fetchTodos);
   }, [dispatch]);
 
+  //to get the incomplete todos from the todo list
   const filterByIncomplete = todos.filter((todo) => !todo.completed);
 
+  //filter the todos based on color
   const filterByColors = (todo) => {
     const { colors } = filters;
     if (colors.length > 0) {

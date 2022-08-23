@@ -1,13 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { colorChanged, statusChanged } from "../redux/filters/actions";
+import { colorChanged} from "../redux/filters/actions";
 
 export default function FooterIncompleteTask({ filterByIncomplete }) {
+  // to get the todos filtering factors from the redux store
   const filters = useSelector((state) => state.filters);
 
+  // redux hook to dispatch actions
   const dispatch = useDispatch();
 
+  //destructuring the filters to get the color
   const { colors } = filters;
 
+  // function to toggle the color
   const handleColorChange = (color) => {
     if (colors.includes(color)) {
       dispatch(colorChanged(color, "removed"));

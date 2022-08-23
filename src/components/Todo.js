@@ -10,13 +10,22 @@ import updateTextThunk from "../redux/todos/thunk/updateTextThunk";
 import toast from "react-hot-toast";
 
 export default function Todo({ todo, completedTask }) {
+  //Redux hook to dispatch actions
   const dispatch = useDispatch();
+
+  //destructuring the todo object
   const { text, id, completed, color } = todo;
 
+  // to focus the input field when the edit button is clicked
   const textInputRef = useRef(null);
+
+  //to toggle between edit and display mode
   const [isEditing, setIsEditing] = useState(false);
+
+  //to store the updated text
   const [textInput, setTextInput] = useState(text);
 
+  //function to change the status of the todo asynchronously
   const handleStatusChange = (todoId) => {
     dispatch(updateStatus(todoId, completed));
     if (!completed) {
@@ -28,6 +37,7 @@ export default function Todo({ todo, completedTask }) {
     }
   };
 
+  //toggle between color options asynchronously
   const handleColorChange = (todoId, color, completed) => {
     if (!completed) {
       dispatch(updateColor(todoId, color));
@@ -46,16 +56,20 @@ export default function Todo({ todo, completedTask }) {
     }
   };
 
+  //to update the text of the todo asynchronously
   const handleUpdateText = (todoId) => {
     dispatch(updateTextThunk(todoId, textInput));
   };
 
+  //function to edit the todo asynchronously
   const handleEditing = (id) => {
+    //when edit mode is opened then if the user toggle edit button again then it will close the edit mode and also the text will be updated in display mode
     if (isEditing) {
       handleUpdateText(id);
       toast.success("Todo Updated Successfully");
       setIsEditing(false);
     }
+    //when edit mode is closed then if the user toggle edit button the edit mode will open and input field will be focused so that the user can edit the text
     if (!isEditing) {
       return new Promise((resolve, reject) => {
         setIsEditing(true);
@@ -66,6 +80,7 @@ export default function Todo({ todo, completedTask }) {
     }
   };
 
+  //function to delete the todo asynchronously
   const handleDelete = (todoId) => {
     dispatch(deleteTodo(todoId));
     toast.error("Task Deleted Successfully");

@@ -1,29 +1,21 @@
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCompleted } from "../redux/todos/actions";
-import fetchTodos from "../redux/todos/thunk/fetchTodos";
 import FooterCompletedTask from "./FooterCompletedTask";
 import Todo from "./Todo";
 
 const CompleteTodoList = () => {
+  // redux hook to get the todos
   const todos = useSelector((state) => state.todos);
-  const filters = useSelector((state) => state.filters);
+  // redux hook to dispatch actions
   const dispatch = useDispatch();
 
+  // to get the completed todos from the todo list
   const filterByCompleted = todos.filter((todo) => todo.completed);
 
-  const filterByColors = (todo) => {
-    const { colors } = filters;
-    if (colors.length > 0) {
-      return colors.includes(todo?.color);
-    }
-    return true;
-  };
-
-
-
+  // function to clear the completed todos
   const clearHandler = () => {
     dispatch(clearCompleted());
   };
